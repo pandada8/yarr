@@ -161,6 +161,8 @@ function dateRepr(d) {
   return out
 }
 
+Vue.config.devtools = true
+
 Vue.component('relative-time', {
   props: ['val'],
   data: function() {
@@ -605,6 +607,23 @@ var vm = new Vue({
         document.location.reload()
       })
     },
+    markRead: function(direction) {
+      console.log(direction)
+      let pending
+      const currentIndex = this.items.findIndex(item => item.id === this.itemSelected)
+      console.log(currentIndex)
+      if (direction == 'below') {
+        pending = this.items.slice(currentIndex)
+      } else {
+        pending = this.items.slice(0, currentIndex+1)
+      }
+      pending = pending.filter(item => item.status == 'unread')
+      if (pending.length == 0) return
+      pending.forEach((x) => {
+        // ?
+        this.toggleItemStatus(x, 'read', 'read')
+      })
+    },
     toggleReadability: function() {
       if (this.itemSelectedReadability) {
         this.itemSelectedReadability = null
@@ -679,3 +698,4 @@ var vm = new Vue({
 })
 
 vm.$mount('#app')
+

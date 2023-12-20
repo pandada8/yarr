@@ -27,7 +27,7 @@ build_windows:
 	GOOS=windows GOARCH=amd64 go build -tags "sqlite_foreign_keys windows" -ldflags="$(GO_LDFLAGS) -H windowsgui" -o _output/windows/yarr.exe ./cmd/yarr
 
 serve:
-	go run -tags "sqlite_foreign_keys" ./cmd/yarr -db local.db
+	go run -tags "sqlite_foreign_keys" ./cmd/yarr -addr 0.0.0.0:7070 -db local.db
 
 test:
 	go test -tags "sqlite_foreign_keys" ./...
