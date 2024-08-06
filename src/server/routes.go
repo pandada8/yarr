@@ -293,6 +293,15 @@ func (s *Server) handleFeed(c *router.Context) {
 				s.db.UpdateFeedFolder(id, &folderId)
 			}
 		}
+		if link, ok := body["feed_link"]; ok {
+			if reflect.TypeOf(link).Kind() == reflect.String {
+				linkStr := link.(string)
+				if linkStr != "" {
+					fmt.Println(linkStr)
+					s.db.UpdateFeedFeedLink(id, linkStr)
+				}
+			}
+		}
 		c.Out.WriteHeader(http.StatusOK)
 	} else if c.Req.Method == "DELETE" {
 		s.db.DeleteFeed(id)
